@@ -19,18 +19,21 @@ public class ReverseList {
 		mln.add(4, 1342);
 		mln.add(5, 6);
 		System.out.println("原链表...") ;
-//		while(head!=null){
-//			System.out.print(head.data + "、");
-//			head = head.next ;
-//		}
+		MyListNode tmp = head ;
+		while(tmp!=null){
+			System.out.print(tmp.data + "、");
+			tmp = tmp.next ;
+		}
 		System.out.println("\n反转链表...") ;
-		MyListNode new_head = mln.ReverseList(head) ;
+		MyListNode new_head = mln.ReverseList2(head) ;
 		while(new_head!=null){
 			System.out.print(new_head.data + "、");
 			new_head = new_head.next ;
 		}
 	}
-
+	/*
+	 *  反转链表，非递归
+	 */
 	public MyListNode ReverseList(MyListNode head) {
 		if(head==null || head.next == null){
 			return head ;
@@ -45,6 +48,19 @@ public class ReverseList {
 			cur = next ;
 		}
 		return pre ;
+	}
+	
+	/*
+	 *  反转链表，递归
+	 */
+	public MyListNode ReverseList2(MyListNode head) {
+		if(head==null || head.next == null){
+			return head ;
+		}
+		MyListNode reverseNode = ReverseList(head.next) ;
+		head.next.setNext(head) ;
+		head.setNext(null) ;
+		return reverseNode ;
 	}
 
 	// 插入一个头节点

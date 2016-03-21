@@ -9,65 +9,78 @@ import java.util.concurrent.locks.ReentrantLock;
  * @author hadoop
  *
  */
-class Resource{
-	private String name ;
-	private int count = 1;
-	private boolean flag = false ;// 表示是否有生产的物品
-	private Lock lock = new ReentrantLock() ;
-	private Condition condition_pro = lock.newCondition() ;
-	private Condition condition_con = lock.newCondition() ;
-	
-	public void set(String name) throws InterruptedException{
-		lock.lock();
-		try{
-			while(flag){
-				condition_pro.await();
-			}
-			this.name = name + "----" + count++;
-			System.out.println(Thread.currentThread().getName() + "produce ..." + this.name) ;
-			flag = true ;
-			condition_con.signal();
-		}finally{
-			lock.unlock();
-		}
-	}
-	
-	public void out() throws InterruptedException{
-		lock.lock();
-		try{
-			while(!flag){
-				condition_con.await(); 
-			}
-			System.out.println(Thread.currentThread().getName() + "consumer ..." + this.name);
-			System.out.println("-----------------------------");
-			flag = false ;
-			condition_pro.signal();
-		}finally{
-			lock.unlock();
-		}
+public class ProducerAndConsumer {
+	public static void main(String[] args) {
+		Resource res = new Resource() ;
+		Producer pro = new Producer(res) ;
+		Consumer con = new Consumer(res) ;
+		Thread t1 = new Thread(pro) ;
+		Thread t2 = new Thread(pro) ;
+		Thread t3 = new Thread(con) ;
+		Thread t4 = new Thread(con) ;
+		t1.start();
+		t2.start();
+		t3.start();
+		t4.start();
 	}
 }
 
-class Producer implements Runnable{
-	private Resource r ; 
-	Producer(Resource r){
+class Resource{
+	String name ;
+	int count = 1 ; 
+	boolean flag = false ;
+	Lock lock = new ReentrantLock() ;
+	Condition con_pro = lock.newCondition() ;
+	Condition con_con = lock.newCondition() ;
+	
+	public void set(String name) throws InterruptedException{
+		lock.lock(); 
+		try{
+			while(flag){       
+				con_pro.await();  // 
+			}
+			this.name = name + "--" + count++ ;
+			System.out.println(Thread.currentThread().getName() + "produce..." + this.name);
+			flag = true ;
+			con_con.signal();
+		}finally{
+			lock.unlock();
+		}
+	}
+	public void out() throws InterruptedException{
+		lock.lock(); 
+		try{
+			while(!flag){
+				con_con.await();  // 
+			}
+			System.out.println(Thread.currentThread().getName() + "consumer..." + this.name);
+			System.out.println("---------------------------------------");
+			flag = false ;
+			con_pro.signal();
+		}finally{
+			lock.unlock();
+		}
+	}		
+}
+class Producer implements Runnable {
+	Resource r ; 
+	Producer(Resource r) {
 		this.r = r ;
 	}
 	@Override
 	public void run() {
 		while(true){
 			try {
-				r.set("慕岩");
+				r.set("莫阳");
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
 		}
-		
 	}
 }
 
 class Consumer implements Runnable{
-	private Resource r ; 
+	Resource r ;
 	Consumer(Resource r){
 		this.r = r ;
 	}
@@ -83,18 +96,3 @@ class Consumer implements Runnable{
 	}
 }
 
-public class ProducerAndConsumer {
-	public static void main(String[] args) {
-		Resource res = new Resource() ;
-		Producer pre = new Producer(res) ;
-		Consumer con = new Consumer(res) ;
-		Thread t1 = new Thread(pre) ;
-		Thread t2 = new Thread(pre) ;
-		Thread t3 = new Thread(con) ;
-		Thread t4 = new Thread(con) ;
-		t1.start();
-		t2.start();
-		t3.start();
-		t4.start();
-	}
-}

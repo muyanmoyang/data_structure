@@ -7,12 +7,12 @@ import muyanmoyang.data_structure.List_2.ListOperation;
 /*
  *  在O(1)时间删除链表节点
  */
-public class deleteNodeInO1 {
+public class DeleteNodeInO1 {
 	public static ListNode2 head; // 头节点
 	public int pos = 0; // 节点的位置
 
 	public static void main(String[] args) {
-		deleteNodeInO1 dn1 = new deleteNodeInO1();
+		DeleteNodeInO1 dn1 = new DeleteNodeInO1();
 		dn1.addFirstNode("H");
 		dn1.add(1, "K");
 		dn1.add(2, "C");

@@ -21,7 +21,7 @@ class Resource3{
 			while(flag){
 				condition_pro.await();
 			}
-			this.name = name + "--" + (count--) ; 
+			this.name = name + "--" + (count++) ; 
 			System.out.println(Thread.currentThread().getName() + "  produce..." + name) ;
 			flag = true ;
 			condition_con.signal();

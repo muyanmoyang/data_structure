@@ -1,5 +1,6 @@
 package muyanmoyang.swadoffer;
 
+import java.util.Scanner;
 import java.util.Stack;
 
 /**
@@ -11,6 +12,12 @@ public class isInOrder {
 		int[] popA = {4,5,3,2,1} ;
 		isInOrder isIn = new isInOrder() ;
 		System.out.println(isIn.IsPopOrder(pushA, popA)) ;
+		
+//		Scanner scanner = new Scanner(System.in) ;
+//		System.out.println("please input a...") ;
+//		int a = scanner.nextInt() ;
+//		System.out.println("a=" + a) ;
+		
 	}
 	public boolean IsPopOrder(int [] pushA,int [] popA) {
 		Stack<Integer> stack = new Stack<Integer>() ; // ¸¨ÖúÕ»

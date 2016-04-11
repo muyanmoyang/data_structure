@@ -18,3 +18,18 @@ public class SingelModel {
 		return s ;
 	}
 }
+
+class SingelModel2{
+	private SingelModel2(){} ;
+	private static SingelModel2 s = null ;
+	public static SingelModel2 getInstance(){
+		if(s == null){
+			synchronized (s) {
+				if(s == null){
+					s = new SingelModel2() ;
+				}
+			}
+		}
+		return s;
+	}
+}

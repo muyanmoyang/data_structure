@@ -312,6 +312,7 @@ class HFnode implements Comparable<HFnode> {
 
     }
 
+
     private int changeString(String s) {
         int result = 0;
         for (char c : s.toCharArray()) {

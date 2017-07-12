@@ -5,6 +5,7 @@ import java.util.LinkedHashMap;
 import java.util.Map.Entry;
 import java.util.TreeMap;
 
+
 public class HashTest {
 	public static void main(String[] args) {
 		Object key = 100 ;

@@ -2,10 +2,12 @@ package muyanmoyang.java;
 
 import java.util.ArrayList;
 
+
 public class JavaDemo1 {
 	public static void main(String[] args) {
 		compare_Str();
 		ArrayList list = new ArrayList<>() ;
+		System.out.println("test...")
 	}
 
 	private static void compare_Str() {
